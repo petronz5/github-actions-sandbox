@@ -1,0 +1,30 @@
+name: Lezione 1 - Hello World Workflow
+
+# 1. TRIGGER: Quando deve avviarsi il workflow?
+on:
+  push:
+    branches: [ "main" ]
+
+# 2. JOBS: Quali lavori deve eseguire?
+jobs:
+  primo-job:
+    # Tipo di macchina virtuale (Runner) fornita da GitHub
+    runs-on: ubuntu-latest
+
+    # Sequenza dei passaggi dentro il job
+    steps:
+      # Step A: Clona il codice della repo sul runner (Action ufficiale di GitHub)
+      - name: Checkout del codice
+        uses: actions/checkout@v4
+
+      # Step B: Esegue un comando bash sulla macchina virtuale
+      - name: Stampa un messaggio di benvenuto
+        run: echo "Ciao Davide, la prima pipeline di GitHub Actions funziona!"
+
+      # Step C: Mostra dettagli del sistema
+      - name: Informazioni sul runner
+        run: |
+          echo "Il workflow è stato attivato dall'evento: ${{ github.event_name }}"
+          echo "L'utente che ha lanciato il job è: ${{ github.actor }}"
+          echo "Sistema operativo della macchina virtuale:"
+          uname -a
